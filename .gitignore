@@ -1,0 +1,5 @@
+# Файлы, которые GitHub будет игнорировать
+.env
+__pycache__/
+*.pyc
+.DS_Store
