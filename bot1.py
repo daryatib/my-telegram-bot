@@ -3,8 +3,11 @@ from telebot import types
 import random
 import requests
 from bs4 import BeautifulSoup
+import os
+from dotenv import load_dotenv
 
-API_TOKEN = '8140442640:AAGZMJoUWDUg9y247HUiwW-t9b0TMkgfDdA'
+load_dotenv()  # Загружает токен из .env
+API_TOKEN = os.getenv('TELEGRAM_TOKEN')  # Безопасное получение
 bot = telebot.TeleBot(API_TOKEN)
 
 # ID публичной папки
@@ -56,3 +59,5 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "Я тебя не понимаю. Выбери кнопку")
 
 bot.polling(none_stop=True, interval=0)
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
