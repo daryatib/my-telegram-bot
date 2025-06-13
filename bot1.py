@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()  # Загружает токен из .env
 API_TOKEN = os.getenv('TELEGRAM_TOKEN')  # Безопасное получение
 bot = telebot.TeleBot(API_TOKEN)
