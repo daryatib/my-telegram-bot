@@ -8,23 +8,8 @@ API_TOKEN = '8140442640:AAGZMJoUWDUg9y247HUiwW-t9b0TMkgfDdA'
 bot = telebot.TeleBot(API_TOKEN)
 
 # ID публичной папки
-folder_id = "1TLtX_a6dixMcFtFn308nbjSppwQZOndm"  # Замени на свой
-url = f"https://drive.google.com/drive/folders/{folder_id}"
-
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
-
-CAT_MEMES = [
-    f"https://drive.google.com/uc?export=download&id={link.split('/')[5]}"
-    for link in str(soup).split('"')
-    if '/file/d/' in link
-]
-
-DOG_MEMES = [
-    f"https://drive.google.com/uc?export=download&id={link.split('/')[5]}"
-    for link in str(soup).split('"')
-    if '/file/d/' in link
-]
+folder_id_cat = "1TLtX_a6dixMcFtFn308nbjSppwQZOndm"  # Замени на свой
+folder_id_dog = "1VCkSQYo98FjCuDW5J-S_soSKFQ4kxtp8"
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -41,10 +26,26 @@ def start(message):
 @bot.message_handler(func=lambda message: message.text in ["мемы с котами", "мемы с собаками"])
 def meme(message):
     if message.text == 'мемы с котами':
-        meme_url = random.choice(CAT_MEMES)
+        url = f"https://drive.google.com/drive/folders/{folder_id_cat}"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        MEMES = [
+            f"https://drive.google.com/uc?export=download&id={link.split('/')[5]}"
+            for link in str(soup).split('"')
+            if '/file/d/' in link
+        ]
+        meme_url = random.choice(MEMES)
         bot.send_photo(message.chat.id, meme_url)
     elif message.text == 'мемы с собаками':
-        meme_url = random.choice(DOG_MEMES)
+        url = f"https://drive.google.com/drive/folders/{folder_id_dog}"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        MEMES = [
+            f"https://drive.google.com/uc?export=download&id={link.split('/')[5]}"
+            for link in str(soup).split('"')
+            if '/file/d/' in link
+        ]
+        meme_url = random.choice(MEMES)
         bot.send_photo(message.chat.id, meme_url)
 
 @bot.message_handler(content_types=['text'])
