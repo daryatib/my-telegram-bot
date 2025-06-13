@@ -56,8 +56,8 @@ def meme(message):
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    if message.text == 'Привет':
-        bot.send_message(message.from_user.id, "Привет! Выбери кнопку")
+    if message.text == 'отстань':
+        bot.send_message(message.from_user.id, "сам отстань")
     else:
         bot.send_message(message.from_user.id, "Я тебя не понимаю. Выбери кнопку")
 
